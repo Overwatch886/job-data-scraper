@@ -1,0 +1,55 @@
+<!-- This tells Flask this template extends the base template -->
+{% extends "base.html" %}
+
+<!-- This fills in the title block from base.html -->
+{% block title %}Job Dashboard - {{ stats.total_jobs }} Jobs Available{% endblock %}
+
+<!-- This fills in the content block from base.html -->
+{% block content %}
+    <h1>Remote Jobs Dashboard</h1>
+    
+    <!-- Statistics section -->
+    <div class="stats">
+        <div class="stat-card">
+            <h3>{{ stats.total_jobs }}</h3>
+            <p>Total Jobs</p>
+        </div>
+        <div class="stat-card">
+            <h3>{{ stats.with_salary }}</h3>
+            <p>With Salary Info</p>
+        </div>
+        <div class="stat-card">
+            <h3>{{ stats.companies }}</h3>
+            <p>Companies</p>
+        </div>
+    </div>
+
+    <!-- Search form -->
+    <form method="GET" style="margin-bottom: 20px;">
+        <input type="text" name="search" placeholder="Search jobs..." 
+               value="{{ search_term }}" style="padding: 8px; margin-right: 10px;">
+        <button type="submit" style="padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px;">Search</button>
+        {% if search_term %}
+        <a href="/" style="margin-left: 10px;">Clear</a>
+        {% endif %}
+    </form>
+
+    <!-- Jobs list -->
+    {% if jobs %}
+        {% for job in jobs %}
+        <div class="job-card">
+            <div class="job-title">{{ job.title }}</div>
+            <div class="job-company">{{ job.company }}</div>
+            <div style="margin-bottom: 8px;">📍 {{ job.location }}</div>
+            {% if job.salary and job.salary != 'Not specified' %}
+            <span class="job-salary">{{ job.salary }}</span>
+            {% endif %}
+            <div style="margin-top: 10px;">
+                <a href="{{ job.url }}" target="_blank">View Job</a>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No jobs found. Try running your scraper to get fresh data.</p>
+    {% endif %}
+{% endblock %}

@@ -76,10 +76,10 @@ def api_jobs():
     jobs = load_jobs()  # Load all jobs
     return jsonify(jobs)  # Return jobs as JSON
 
-# This block runs if you need to run the script on your local computer network so you can ucomment this if that is the case.
-#if __name__ == '__main__':
-    # Start the Flask development server
+# This block runs the app if you start this file directly (not imported)
+if __name__ == '__main__':
+    # Start the Flask development server  
     # debug=True: shows helpful error messages
     # host='0.0.0.0': makes the app accessible on your network
     # port=5000: runs the app on port 5000
-   # app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5000)
